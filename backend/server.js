@@ -57,10 +57,8 @@ app.use((err, req, res, next) => {
 // Start server
 const startServer = async () => {
   try {
-    // Test database connection
     await testConnection();
     
-    // Start listening
     app.listen(config.port, () => {
       console.log('=================================');
       console.log('  Web Masjid Backend API');
