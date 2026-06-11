@@ -32,9 +32,6 @@ export const authService = {
   },
 };
 
-const bt = String.fromCharCode(96);
-const d = String.fromCharCode(36);
-
 export const bannerService = {
   getActive: async () => { const r = await api.get("/banners/active"); return r.data; },
   getAll: async () => { const r = await api.get("/banners"); return r.data; },
