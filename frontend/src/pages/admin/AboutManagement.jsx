@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { aboutService, getImageUrl } from "../../services";
+import { FiTrash2, FiImage } from "react-icons/fi";
 import Swal from "sweetalert2";
 
 const AboutManagement = () => {

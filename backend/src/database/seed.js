@@ -107,6 +107,19 @@ const seed = async () => {
     });
     
     console.log('✓ Sample announcement created');
+    // Create DKM Management
+    await models.Management.bulkCreate([
+      { name: "Ustadz Ahmad Fauzi", position: "Ketua DKM", description: "Ketua Dewan Kemakmuran Masjid", order: 1 },
+      { name: "H. Bapak Suryadi", position: "Wakil Ketua", description: "Wakil Ketua DKM", order: 2 },
+      { name: "Bapak Rudi Hartono", position: "Sekretaris", description: "Sekretaris DKM", order: 3 },
+      { name: "Bapak Agus Wijaya", position: "Bendahara", description: "Bendahara DKM", order: 4 },
+      { name: "Ustadz Muhammad Amin", position: "Ketua Bidang Dakwah", description: "Koordinator kegiatan dakwah", order: 5 },
+      { name: "Bapak Dedi Kurniawan", position: "Ketua Bidang Pendidikan", description: "Koordinator pendidikan", order: 6 },
+      { name: "Bapak Hendra Gunawan", position: "Ketua Bidang Sosial", description: "Koordinator kegiatan sosial", order: 7 },
+      { name: "Bapak Firmansyah", position: "Ketua Bidang Pembangunan", description: "Koordinator pembangunan masjid", order: 8 },
+    ]);
+    console.log('✓ DKM Management created');
+
     
     console.log('\n=================================');
     console.log('Database seeding completed!');
