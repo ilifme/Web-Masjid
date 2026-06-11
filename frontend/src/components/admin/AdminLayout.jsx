@@ -1,5 +1,4 @@
-import {
-  FiLock, useState } from 'react';
+import { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -21,6 +20,7 @@ import {
   FiMoon,
   FiClock,
   FiUser,
+  FiLock,
 } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 
