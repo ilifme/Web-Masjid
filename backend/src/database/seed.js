@@ -64,6 +64,7 @@ const seed = async () => {
       { key: 'instagram', value: 'https://instagram.com/masjid', type: 'text', group: 'social', label: 'Instagram' },
       { key: 'youtube', value: 'https://youtube.com/masjid', type: 'text', group: 'social', label: 'YouTube' },
       { key: 'maps_embed', value: '', type: 'textarea', group: 'contact', label: 'Google Maps Embed' },
+      { key: 'footer_logo', value: '', type: 'image', group: 'general', label: 'Footer Logo' },
     ];
     
     await models.Setting.bulkCreate(settings);

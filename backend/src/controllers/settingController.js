@@ -184,6 +184,21 @@ const settingController = {
       });
     }
   },
-};
 
+  // Upload footer logo
+  
+  uploadFooterLogo: async (req, res) => {
+    try {
+      if (!req.file) return res.status(400).json({ success: false, message: 'File harus diupload' });
+      const imagePath = '/' + req.file.path.replace(/\\/g, '/');
+      let setting = await Setting.findOne({ where: { key: 'footer_logo' } });
+      if (setting) { await setting.update({ value: imagePath, type: 'image' }); }
+      else { await Setting.create({ key: 'footer_logo', value: imagePath, type: 'image', group: 'general', label: 'Footer Logo' }); }
+      res.json({ success: true, message: 'Logo footer berhasil diupload', data: { url: imagePath } });
+    } catch (error) {
+      res.status(500).json({ success: false, message: 'Terjadi kesalahan', error: error.message });
+    }
+  },
+
+};
 module.exports = settingController;
