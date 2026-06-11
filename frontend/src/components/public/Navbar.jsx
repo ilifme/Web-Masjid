@@ -1,17 +1,20 @@
-import { Link, useLocation } from 'react-router-dom';
+﻿import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FiMenu, FiX, FiMoon, FiSun } from 'react-icons/fi';
 import { useTheme } from '../../contexts/ThemeContext';
+import { settingService, getImageUrl } from '../../services';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [footerLogo, setFooterLogo] = useState(null);
+  const [siteName, setSiteName] = useState("Masjid Quba");
   const { darkMode, toggleDarkMode } = useTheme();
   const location = useLocation();
   const isHome = location.pathname === "/";
 
   useEffect(() => {
-    // Set scrolled immediately based on page type
+    fetchSettings();
     if (!isHome) {
       setScrolled(true);
     } else {
@@ -27,6 +30,18 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHome, location.pathname]);
+
+  const fetchSettings = async () => {
+    try {
+      const res = await settingService.getPublic();
+      if (res.data) {
+        if (res.data.footer_logo) setFooterLogo(res.data.footer_logo);
+        if (res.data.site_name) setSiteName(res.data.site_name);
+      }
+    } catch (err) {
+      console.error("Failed to fetch settings:", err);
+    }
+  };
 
   const navLinks = [
     { path: '/', label: 'Beranda' },
@@ -50,12 +65,16 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">M</span>
-            </div>
+            {footerLogo ? (
+              <img src={getImageUrl(footerLogo)} alt={siteName} className="w-12 h-12 object-contain rounded-lg" />
+            ) : (
+              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">{siteName.charAt(0)}</span>
+              </div>
+            )}
             <div>
               <h1 className={"font-bold text-lg " + (scrolled ? "text-gray-900 dark:text-white" : "text-white")}>
-                Masjid Quba
+                {siteName}
               </h1>
             </div>
           </Link>
