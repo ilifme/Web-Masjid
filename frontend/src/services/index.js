@@ -36,8 +36,8 @@ export const bannerService = {
   getActive: async () => { const r = await api.get("/banners/active"); return r.data; },
   getAll: async () => { const r = await api.get("/banners"); return r.data; },
   getById: async (id) => { const r = await api.get("/banners/" + id); return r.data; },
-  create: async (fd) => { const r = await api.post("/banners", fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
-  update: async (id, fd) => { const r = await api.put("/banners/" + id, fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
+  create: async (fd) => { const r = await api.post("/banners", fd, ); return r.data; },
+  update: async (id, fd) => { const r = await api.put("/banners/" + id, fd, ); return r.data; },
   delete: async (id) => { const r = await api.delete("/banners/" + id); return r.data; },
 };
 
@@ -46,8 +46,8 @@ export const articleService = {
   getBySlug: async (slug) => { const r = await api.get("/articles/slug/" + slug); return r.data; },
   getAll: async (params) => { const r = await api.get("/articles", { params }); return r.data; },
   getById: async (id) => { const r = await api.get("/articles/" + id); return r.data; },
-  create: async (fd) => { const r = await api.post("/articles", fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
-  update: async (id, fd) => { const r = await api.put("/articles/" + id, fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
+  create: async (fd) => { const r = await api.post("/articles", fd, ); return r.data; },
+  update: async (id, fd) => { const r = await api.put("/articles/" + id, fd, ); return r.data; },
   delete: async (id) => { const r = await api.delete("/articles/" + id); return r.data; },
 };
 
@@ -56,16 +56,16 @@ export const activityService = {
   getBySlug: async (slug) => { const r = await api.get("/activities/slug/" + slug); return r.data; },
   getAll: async (params) => { const r = await api.get("/activities", { params }); return r.data; },
   getById: async (id) => { const r = await api.get("/activities/" + id); return r.data; },
-  create: async (fd) => { const r = await api.post("/activities", fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
-  update: async (id, fd) => { const r = await api.put("/activities/" + id, fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
+  create: async (fd) => { const r = await api.post("/activities", fd, ); return r.data; },
+  update: async (id, fd) => { const r = await api.put("/activities/" + id, fd, ); return r.data; },
   delete: async (id) => { const r = await api.delete("/activities/" + id); return r.data; },
 };
 
 export const galleryService = {
   getAll: async (params) => { const r = await api.get("/gallery", { params }); return r.data; },
   getById: async (id) => { const r = await api.get("/gallery/" + id); return r.data; },
-  create: async (fd) => { const r = await api.post("/gallery", fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
-  update: async (id, fd) => { const r = await api.put("/gallery/" + id, fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
+  create: async (fd) => { const r = await api.post("/gallery", fd, ); return r.data; },
+  update: async (id, fd) => { const r = await api.put("/gallery/" + id, fd, ); return r.data; },
   delete: async (id) => { const r = await api.delete("/gallery/" + id); return r.data; },
 };
 
@@ -80,12 +80,12 @@ export const donationService = {
   getActiveAccounts: async () => { const r = await api.get("/donations/accounts/active"); return r.data; },
   getActiveCampaigns: async () => { const r = await api.get("/donations/campaigns/active"); return r.data; },
   getAllAccounts: async () => { const r = await api.get("/donations/accounts"); return r.data; },
-  createAccount: async (fd) => { const r = await api.post("/donations/accounts", fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
-  updateAccount: async (id, fd) => { const r = await api.put("/donations/accounts/" + id, fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
+  createAccount: async (fd) => { const r = await api.post("/donations/accounts", fd, ); return r.data; },
+  updateAccount: async (id, fd) => { const r = await api.put("/donations/accounts/" + id, fd, ); return r.data; },
   deleteAccount: async (id) => { const r = await api.delete("/donations/accounts/" + id); return r.data; },
   getAllCampaigns: async () => { const r = await api.get("/donations/campaigns"); return r.data; },
-  createCampaign: async (fd) => { const r = await api.post("/donations/campaigns", fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
-  updateCampaign: async (id, fd) => { const r = await api.put("/donations/campaigns/" + id, fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
+  createCampaign: async (fd) => { const r = await api.post("/donations/campaigns", fd, ); return r.data; },
+  updateCampaign: async (id, fd) => { const r = await api.put("/donations/campaigns/" + id, fd, ); return r.data; },
   deleteCampaign: async (id) => { const r = await api.delete("/donations/campaigns/" + id); return r.data; },
 };
 
@@ -100,14 +100,14 @@ export const announcementService = {
 
 export const aboutService = {
   get: async () => { const r = await api.get("/about"); return r.data; },
-  update: async (fd) => { const r = await api.put("/about", fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
+  update: async (fd) => { const r = await api.put("/about", fd, ); return r.data; },
 };
 
 export const managementService = {
   getAll: async () => { const r = await api.get("/management"); return r.data; },
   getById: async (id) => { const r = await api.get("/management/" + id); return r.data; },
-  create: async (fd) => { const r = await api.post("/management", fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
-  update: async (id, fd) => { const r = await api.put("/management/" + id, fd, { headers: { "Content-Type": "multipart/form-data" } }); return r.data; },
+  create: async (fd) => { const r = await api.post("/management", fd, ); return r.data; },
+  update: async (id, fd) => { const r = await api.put("/management/" + id, fd, ); return r.data; },
   delete: async (id) => { const r = await api.delete("/management/" + id); return r.data; },
 };
 
