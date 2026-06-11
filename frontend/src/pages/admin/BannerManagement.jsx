@@ -73,7 +73,7 @@ const BannerManagement = () => {
       resetForm();
       fetchBanners();
     } catch (error) {
-      Swal.fire('Error', error.response?.data?.message || 'Terjadi kesalahan', 'error');
+      Swal.fire({ title: 'Error!', text: error.response?.data?.message || error.message || 'Terjadi kesalahan', icon: 'error', confirmButtonColor: '#10b981' });
     }
   };
 
@@ -109,7 +109,7 @@ const BannerManagement = () => {
         Swal.fire('Berhasil!', 'Banner berhasil dihapus', 'success');
         fetchBanners();
       } catch (error) {
-        Swal.fire('Error', error.response?.data?.message || 'Terjadi kesalahan', 'error');
+        Swal.fire({ title: 'Error!', text: error.response?.data?.message || error.message || 'Terjadi kesalahan', icon: 'error', confirmButtonColor: '#10b981' });
       }
     }
   };

@@ -32,6 +32,9 @@ export const authService = {
   },
 };
 
+const bt = String.fromCharCode(96);
+const d = String.fromCharCode(36);
+
 function mkTpl(str) { return bt + str + bt; }
 
 function mkTplId(str, id) { return bt + str + d + "{id}" + bt; }
