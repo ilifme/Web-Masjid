@@ -1,7 +1,7 @@
-﻿import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FiChevronRight, FiHome, FiArrowUp } from "react-icons/fi";
 
-const Breadcrumb = ({ items, showBackTop = true }) => {
+const Breadcrumb = ({ items, showBackTop = false }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
