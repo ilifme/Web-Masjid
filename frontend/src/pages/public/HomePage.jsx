@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../../components/public/Navbar';
 import Footer from '../../components/public/Footer';
 import { bannerService, articleService, activityService, prayerTimeService, announcementService, getImageUrl } from '../../services';
