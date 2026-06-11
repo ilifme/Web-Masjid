@@ -65,6 +65,9 @@ const startServer = async () => {
   }
 };
 
-startServer();
+// Start server only in non-serverless environment
+if (!process.env.VERCEL) {
+  startServer();
+}
 
 module.exports = app;
