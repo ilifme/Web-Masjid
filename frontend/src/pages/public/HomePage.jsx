@@ -195,8 +195,8 @@ const HomePage = () => {
               {activities.map((activity) => (
                 <Link
                   key={activity.id}
-                  to={/kegiatan/}
-                  className="card card-hover"
+                  to={"/kegiatan/" + activity.slug}
+                  className="card card-hover flex flex-col h-full"
                 >
                   {activity.image && (
                     <img
@@ -205,10 +205,10 @@ const HomePage = () => {
                       className="w-full h-48 object-cover rounded-lg mb-4"
                     />
                   )}
-                  <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm rounded-full mb-3">
+                  <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm rounded-full mb-3 mt-auto">
                     {activity.category}
                   </span>
-                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 flex-grow">
                     {activity.title}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
@@ -253,8 +253,8 @@ const HomePage = () => {
               {articles.map((article) => (
                 <Link
                   key={article.id}
-                  to={/artikel/}
-                  className="card card-hover"
+                  to={"/artikel/" + article.slug}
+                  className="card card-hover flex flex-col h-full"
                 >
                   {article.thumbnail && (
                     <img
@@ -263,10 +263,10 @@ const HomePage = () => {
                       className="w-full h-48 object-cover rounded-lg mb-4"
                     />
                   )}
-                  <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm rounded-full mb-3">
+                  <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm rounded-full mb-3 mt-auto">
                     {article.category}
                   </span>
-                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 flex-grow">
                     {article.title}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
