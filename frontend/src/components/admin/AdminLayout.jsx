@@ -50,22 +50,6 @@ const AdminLayout = () => {
     return item.roles.includes(user?.role);
   });
 
-            const publicLinks = {
-            dashboard: '/',
-            banners: '/',
-            articles: '/artikel',
-            activities: '/kegiatan',
-            gallery: '/galeri',
-            donations: '/donasi',
-            announcements: '/',
-            about: '/tentang',
-            management: '/tentang',
-            'prayer-times': '/',
-            settings: '/',
-            users: '/',
-          };
-          const currentPage = location.pathname.split('/').pop();
-          const publicUrl = publicLinks[currentPage] || '/';
   const handleLogout = () => {
     Swal.fire({
       title: 'Logout?',
@@ -185,7 +169,7 @@ const AdminLayout = () => {
                 target="_blank"
                 className="px-4 py-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
               >
-                Buka Halaman
+                Lihat Website
               </Link>
             </div>
           </div>
