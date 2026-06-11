@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { activityService, getImageUrl } from "../../services";
-import { FiPlus, FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiPlus, FiEdit, FiTrash2, FiImage } from "react-icons/fi";
 import Swal from "sweetalert2";
 
 const categories = ["kajian", "sosial", "pendidikan", "ramadhan", "lainnya"];
@@ -94,7 +94,23 @@ const ActivityManagement = () => {
                 <div><label className="label">Kategori</label><select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="input">{categories.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}</select></div>
                 <div><label className="label">Status</label><select value={formData.isActive} onChange={e => setFormData({...formData, isActive: e.target.value === "true"})} className="input"><option value="true">Aktif</option><option value="false">Nonaktif</option></select></div>
               </div>
-              <div><label className="label">Gambar</label><input type="file" accept="image/*" onChange={handleImageChange} className="input" />{imagePreview && <img src={imagePreview} alt="" className="w-full h-32 object-cover rounded-lg mt-2" />}</div>
+              <div><label className="label">Gambar</label><div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
+    {imagePreview ? (
+      <div className="relative">
+        <img src={imagePreview} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+        <button type="button" onClick={() => { setImageFile(null); setImagePreview(null); }}
+          className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+          <FiTrash2 />
+        </button>
+      </div>
+    ) : (
+      <label className="flex flex-col items-center cursor-pointer">
+        <FiImage className="w-12 h-12 text-gray-400 mb-2" />
+        <span className="text-sm text-gray-600 dark:text-gray-400">Klik untuk upload gambar</span>
+        <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+      </label>
+    )}
+  </div></div>
               <div><label className="label">Deskripsi *</label><textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="textarea" rows="4" required /></div>
               <div className="grid grid-cols-2 gap-4">
                 <div><label className="label">Jadwal</label><input type="text" value={formData.schedule} onChange={e => setFormData({...formData, schedule: e.target.value})} className="input" placeholder="Setiap Minggu, 19:00 WIB" /></div>

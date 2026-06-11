@@ -83,13 +83,23 @@ const GalleryManagement = () => {
                 <div><label className="label">Tipe</label><select value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} className="input"><option value="photo">Foto</option><option value="video">Video</option></select></div>
                 <div><label className="label">Kategori</label><input type="text" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="input" /></div>
               </div>
-              <div>
-                <label className="label">File *</label>
-                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center cursor-pointer" onClick={() => document.getElementById("fileInput").click()}>
-                  {preview ? <img src={preview} alt="" className="max-h-40 mx-auto rounded-lg" /> : <div><FiImage className="w-12 h-12 mx-auto text-gray-400 mb-2" /><p className="text-sm text-gray-500">Klik untuk upload</p></div>}
-                </div>
-                <input id="fileInput" type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
-              </div>
+              <div><label className="label">File *</label><div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
+    {preview ? (
+      <div className="relative">
+        <img src={preview} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+        <button type="button" onClick={() => { setFile(null); setPreview(null); }}
+          className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+          <FiTrash2 />
+        </button>
+      </div>
+    ) : (
+      <label className="flex flex-col items-center cursor-pointer">
+        <FiImage className="w-12 h-12 text-gray-400 mb-2" />
+        <span className="text-sm text-gray-600 dark:text-gray-400">Klik untuk upload gambar</span>
+        <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+      </label>
+    )}
+  </div></div>
               <div><label className="label">Deskripsi</label><textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="textarea" rows="3" /></div>
               <div className="flex space-x-3 pt-4">
                 <button type="submit" className="btn btn-primary flex-1">Simpan</button>

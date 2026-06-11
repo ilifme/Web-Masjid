@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { managementService, getImageUrl } from "../../services";
-import { FiPlus, FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiPlus, FiEdit, FiTrash2, FiImage } from "react-icons/fi";
 import Swal from "sweetalert2";
 
 const ManagementBoard = () => {

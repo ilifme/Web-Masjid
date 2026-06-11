@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { donationService, getImageUrl } from "../../services";
-import { FiPlus, FiEdit, FiTrash2, FiDollarSign } from "react-icons/fi";
+import { FiPlus, FiEdit, FiTrash2, FiDollarSign, FiImage } from "react-icons/fi";
 import Swal from "sweetalert2";
 
 const DonationManagement = () => {
@@ -101,7 +101,23 @@ const DonationManagement = () => {
             <h2 className="text-2xl font-bold mb-6">{editData ? "Edit" : "Tambah"}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <input className="input" placeholder="Nama Bank / Judul" value={formData.bankName || formData.title || ""} onChange={e => setFormData({...formData, bankName: e.target.value, title: e.target.value})} required />
-              {tab === "accounts" && <><input className="input" placeholder="Nomor Rekening" value={formData.accountNumber || ""} onChange={e => setFormData({...formData, accountNumber: e.target.value})} required /><input className="input" placeholder="Atas Nama" value={formData.accountName || ""} onChange={e => setFormData({...formData, accountName: e.target.value})} required /><input type="file" accept="image/*" className="input" onChange={e => setFile(e.target.files[0])} /></>}
+              {tab === "accounts" && <><input className="input" placeholder="Nomor Rekening" value={formData.accountNumber || ""} onChange={e => setFormData({...formData, accountNumber: e.target.value})} required /><input className="input" placeholder="Atas Nama" value={formData.accountName || ""} onChange={e => setFormData({...formData, accountName: e.target.value})} required /><div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
+    {file ? (
+      <div className="relative">
+        <img src={URL.createObjectURL(file)} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+        <button type="button" onClick={() => setFile(null)}
+          className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+          <FiTrash2 />
+        </button>
+      </div>
+    ) : (
+      <label className="flex flex-col items-center cursor-pointer">
+        <FiImage className="w-12 h-12 text-gray-400 mb-2" />
+        <span className="text-sm text-gray-600 dark:text-gray-400">Klik untuk upload gambar</span>
+        <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} className="hidden" />
+      </label>
+    )}
+  </div></>}
               {tab === "campaigns" && <><textarea className="textarea" placeholder="Deskripsi" value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} /><input type="number" className="input" placeholder="Target (Rp)" value={formData.targetAmount || ""} onChange={e => setFormData({...formData, targetAmount: e.target.value})} /><input type="number" className="input" placeholder="Terkumpul (Rp)" value={formData.currentAmount || ""} onChange={e => setFormData({...formData, currentAmount: e.target.value})} /><input type="file" accept="image/*" className="input" onChange={e => setFile(e.target.files[0])} /></>}
               <div className="flex gap-3 pt-4">
                 <button type="submit" className="btn btn-primary flex-1">Simpan</button>

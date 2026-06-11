@@ -50,15 +50,41 @@ const AboutManagement = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="label">Foto Masjid</label>
-            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center cursor-pointer" onClick={() => document.getElementById("mosqueInput").click()}>
-              {mosquePreview ? <img src={mosquePreview} alt="" className="w-full h-48 object-cover rounded-lg" /> : <p className="text-sm text-gray-500 py-10">Klik untuk upload foto masjid</p>}
+            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
+              {mosquePreview ? (
+                <div className="relative">
+                  <img src={mosquePreview} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+                  <button type="button" onClick={() => { setMosqueFile(null); setMosquePreview(null); }}
+                    className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                    <FiTrash2 />
+                  </button>
+                </div>
+              ) : (
+                <label className="flex flex-col items-center cursor-pointer" onClick={() => document.getElementById("mosqueInput").click()}>
+                  <FiImage className="w-12 h-12 text-gray-400 mb-2" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Klik untuk upload foto masjid</span>
+                </label>
+              )}
             </div>
             <input id="mosqueInput" type="file" accept="image/*" className="hidden" onChange={e => { const f = e.target.files[0]; if (f) { setMosqueFile(f); setMosquePreview(URL.createObjectURL(f)); } }} />
           </div>
           <div>
             <label className="label">Struktur Organisasi</label>
-            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center cursor-pointer" onClick={() => document.getElementById("orgInput").click()}>
-              {orgPreview ? <img src={orgPreview} alt="" className="w-full h-48 object-cover rounded-lg" /> : <p className="text-sm text-gray-500 py-10">Klik untuk upload struktur organisasi</p>}
+            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
+              {orgPreview ? (
+                <div className="relative">
+                  <img src={orgPreview} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+                  <button type="button" onClick={() => { setOrgFile(null); setOrgPreview(null); }}
+                    className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                    <FiTrash2 />
+                  </button>
+                </div>
+              ) : (
+                <label className="flex flex-col items-center cursor-pointer" onClick={() => document.getElementById("orgInput").click()}>
+                  <FiImage className="w-12 h-12 text-gray-400 mb-2" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Klik untuk upload struktur organisasi</span>
+                </label>
+              )}
             </div>
             <input id="orgInput" type="file" accept="image/*" className="hidden" onChange={e => { const f = e.target.files[0]; if (f) { setOrgFile(f); setOrgPreview(URL.createObjectURL(f)); } }} />
           </div>
