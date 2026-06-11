@@ -163,7 +163,7 @@ const HomePage = () => {
                 ].map((prayer) => (
                   <div
                     key={prayer.name}
-                    className={card text-center }
+                    className={`card text-center ${nextPrayer?.name === prayer.name ? "bg-primary-600 text-white" : "bg-white dark:bg-gray-800"}`}
                   >
                     <FiClock className="w-8 h-8 mx-auto mb-3" />
                     <h3 className="font-bold text-lg mb-2">{prayer.name}</h3>
@@ -292,3 +292,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
