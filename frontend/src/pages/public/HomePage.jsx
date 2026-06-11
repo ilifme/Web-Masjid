@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import Navbar from '../../components/public/Navbar';
 import Footer from '../../components/public/Footer';
 import { bannerService, articleService, activityService, prayerTimeService, announcementService, getImageUrl } from '../../services';
 import { Link } from 'react-router-dom';
-import { FiClock, FiCalendar, FiArrowRight, FiMapPin } from 'react-icons/fi';
+import { FiClock, FiCalendar, FiArrowRight, FiMapPin, FiX, FiBell } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
 const HomePage = () => {
@@ -12,6 +12,8 @@ const HomePage = () => {
   const [activities, setActivities] = useState([]);
   const [prayerTimes, setPrayerTimes] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
+  const [activePopup, setActivePopup] = useState(null);
+  const [dismissedPopups, setDismissedPopups] = useState(new Set());
   const [loading, setLoading] = useState(true);
   const [nextPrayer, setNextPrayer] = useState(null);
 
@@ -45,6 +47,15 @@ const HomePage = () => {
     }
   };
 
+  const dismissPopup = (id) => {
+    setDismissedPopups(prev => {
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+    setActivePopup(null);
+  };
+
   const calculateNextPrayer = (timings) => {
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
@@ -70,6 +81,10 @@ const HomePage = () => {
     setNextPrayer(prayers[0]);
   };
 
+  const runningTexts = announcements.filter(a => a.type === 'running_text' && a.isActive);
+  const bannerAnns = announcements.filter(a => a.type === 'banner' && a.isActive);
+  const popups = announcements.filter(a => a.type === 'popup' && a.isActive && !dismissedPopups.has(a.id));
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -82,8 +97,19 @@ const HomePage = () => {
     <div className="min-h-screen">
       <Navbar />
 
+      {/* Banner Announcements - Top Bar */}
+      {bannerAnns.length > 0 && (
+        <div className="relative z-40">
+          {bannerAnns.map(banner => (
+            <div key={banner.id} className="bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 text-white text-center py-3 px-4">
+              <p className="font-medium">{banner.content}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Hero Banner */}
-      <section className="relative h-screen">
+      <section className={"relative " + (bannerAnns.length > 0 ? "h-[calc(100vh-52px)]" : "h-screen")}>
         {banners.length > 0 ? (
           <div className="absolute inset-0">
             <img
@@ -123,13 +149,10 @@ const HomePage = () => {
       </section>
 
       {/* Running Text Announcements */}
-      {announcements.filter(a => a.type === 'running_text').length > 0 && (
+      {runningTexts.length > 0 && (
         <div className="bg-primary-600 text-white py-3 overflow-hidden">
           <div className="animate-marquee whitespace-nowrap">
-            {announcements
-              .filter(a => a.type === 'running_text')
-              .map(a => a.content)
-              .join(' • ')}
+            {runningTexts.map(a => a.content).join(' | ')}
           </div>
         </div>
       )}
@@ -142,24 +165,29 @@ const HomePage = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="max-w-5xl mx-auto"
             >
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                  Jadwal Sholat Hari Ini
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {prayerTimes.date} • {prayerTimes.location?.city}
+              <div className="text-center mb-12">
+                <h2 className="section-title">Jadwal Sholat</h2>
+                <p className="section-subtitle">
+                  Waktu sholat untuk wilayah {prayerTimes.city || 'Jakarta'}
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {/* Countdown */}
+              {nextPrayer && (
+                <div className="card max-w-md mx-auto mb-8 text-center gradient-bg text-white">
+                  <p className="text-lg mb-2">Menuju waktu sholat</p>
+                  <h3 className="text-3xl font-bold mb-1">{nextPrayer.name}</h3>
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
                 {[
-                  { name: 'Subuh', time: prayerTimes.timings.fajr },
-                  { name: 'Dzuhur', time: prayerTimes.timings.dhuhr },
-                  { name: 'Ashar', time: prayerTimes.timings.asr },
-                  { name: 'Maghrib', time: prayerTimes.timings.maghrib },
-                  { name: 'Isya', time: prayerTimes.timings.isha },
+                  { name: 'Subuh', time: prayerTimes.timings?.fajr },
+                  { name: 'Dzuhur', time: prayerTimes.timings?.dhuhr },
+                  { name: 'Ashar', time: prayerTimes.timings?.asr },
+                  { name: 'Maghrib', time: prayerTimes.timings?.maghrib },
+                  { name: 'Isya', time: prayerTimes.timings?.isha },
                 ].map((prayer) => (
                   <div
                     key={prayer.name}
@@ -287,9 +315,52 @@ const HomePage = () => {
       </section>
 
       <Footer />
+
+      {/* Popup Announcement Modal */}
+      {popups.length > 0 && !activePopup && popups.length > 0 && (
+        (() => {
+          setTimeout(() => {
+            if (!activePopup) setActivePopup(popups[0]);
+          }, 1000);
+          return null;
+        })()
+      )}
+
+      {activePopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white dark:bg-gray-800 rounded-2xl max-w-lg w-full p-8 relative shadow-2xl"
+          >
+            <button
+              onClick={() => dismissPopup(activePopup.id)}
+              className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+            >
+              <FiX className="w-5 h-5" />
+            </button>
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center mx-auto mb-4">
+                <FiBell className="w-8 h-8 text-primary-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                {activePopup.title}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
+                {activePopup.content}
+              </p>
+              <button
+                onClick={() => dismissPopup(activePopup.id)}
+                className="btn btn-primary mt-6"
+              >
+                Tutup
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default HomePage;
-
