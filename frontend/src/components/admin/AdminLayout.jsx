@@ -42,7 +42,7 @@ const AdminLayout = () => {
     { path: '/admin/about', label: 'Tentang Masjid', icon: FiInfo, roles: ['super_admin', 'admin'] },
     { path: '/admin/management', label: 'Pengurus DKM', icon: FiUsers, roles: ['super_admin', 'admin'] },
     { path: '/admin/prayer-times', label: 'Jadwal Sholat', icon: FiClock, roles: ['super_admin', 'admin'] },
-    { path: '/admin/settings', label: 'Pengaturan', icon: FiSettings, roles: ['super_admin', 'admin'] },
+    { path: '/admin/settings', label: 'Footer', icon: FiSettings, roles: ['super_admin', 'admin'] },
     { path: '/admin/users', label: 'Kelola User', icon: FiUser, roles: ['super_admin'] },
   ];
 
@@ -165,6 +165,12 @@ const AdminLayout = () => {
                 {darkMode ? <FiSun className="w-5 h-5" /> : <FiMoon className="w-5 h-5" />}
               </button>
 
+              <Link
+                to="/admin/change-password"
+                className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-1.5"
+              >
+                <FiLock className="w-4 h-4" /> Ganti Password
+              </Link>
               <Link
                 to="/"
                 target="_blank"

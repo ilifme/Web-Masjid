@@ -74,6 +74,7 @@ function App() {
               <Route path="management" element={<ManagementBoard />} />
               <Route path="prayer-times" element={<PrayerTimeSettings />} />
               <Route path="settings" element={<SettingsManagement />} />
+              <Route path='change-password' element={<ChangePassword />} />
               <Route path="users" element={<UserManagement />} />
             </Route>
 
