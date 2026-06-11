@@ -41,7 +41,7 @@ api.interceptors.response.use(
 export const getImageUrl = (path) => {
   if (!path) return '';
   if (path.startsWith('http')) return path;
-  return ${BASE_URL};
+  return `${BASE_URL}`;
 };
 
 export default api;

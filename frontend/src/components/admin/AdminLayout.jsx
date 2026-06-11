@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -105,7 +105,7 @@ const AdminLayout = () => {
                   <li key={item.path}>
                     <Link
                       to={item.path}
-                      className={lex items-center space-x-3 px-4 py-3 rounded-lg transition-colors }
+                      className={'flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ' + (isActive ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700')}
                     >
                       <Icon className="w-5 h-5" />
                       <span className="font-medium">{item.label}</span>
@@ -145,7 +145,7 @@ const AdminLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <div className={${sidebarOpen ? 'ml-64' : 'ml-0'} transition-all}>
+      <div className={`${sidebarOpen ? 'ml-64' : 'ml-0'} transition-all`}>
         {/* Header */}
         <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-30">
           <div className="flex items-center justify-between px-6 py-4">
@@ -185,4 +185,5 @@ const AdminLayout = () => {
 };
 
 export default AdminLayout;
+
 

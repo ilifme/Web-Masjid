@@ -14,8 +14,8 @@ const activityController = {
       if (isActive !== undefined) where.isActive = isActive === 'true';
       if (search) {
         where[Op.or] = [
-          { title: { [Op.like]: %% } },
-          { description: { [Op.like]: %% } },
+          { title: { [Op.like]: `%${search}%` } },
+          { description: { [Op.like]: `%${search}%` } },
         ];
       }
       

@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
@@ -9,7 +9,6 @@ const routes = require('./src/routes');
 
 const app = express();
 
-// Middleware
 app.use(helmet());
 app.use(cors({
   origin: config.api.clientUrl,
@@ -19,13 +18,9 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// API routes
 app.use('/api', routes);
 
-// Root endpoint
 app.get('/', (req, res) => {
   res.json({
     success: true,
@@ -35,7 +30,6 @@ app.get('/', (req, res) => {
   });
 });
 
-// 404 handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -43,10 +37,8 @@ app.use((req, res) => {
   });
 });
 
-// Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Terjadi kesalahan pada server',
@@ -54,19 +46,17 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
 const startServer = async () => {
   try {
     await testConnection();
-    
     app.listen(config.port, () => {
       console.log('=================================');
       console.log('  Web Masjid Backend API');
       console.log('=================================');
-      console.log(Environment: );
-      console.log(Server running on port );
-      console.log(API URL: );
-      console.log(Client URL: );
+      console.log('Environment: ' + config.nodeEnv);
+      console.log('Server running on port ' + config.port);
+      console.log('API URL: ' + config.api.url);
+      console.log('Client URL: ' + config.api.clientUrl);
       console.log('=================================');
     });
   } catch (error) {

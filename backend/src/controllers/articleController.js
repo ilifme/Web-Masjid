@@ -14,8 +14,8 @@ const articleController = {
       if (category) where.category = category;
       if (search) {
         where[Op.or] = [
-          { title: { [Op.like]: %% } },
-          { content: { [Op.like]: %% } },
+          { title: { [Op.like]: `%${search}%` } },
+          { content: { [Op.like]: `%${search}%` } },
         ];
       }
       
@@ -63,8 +63,8 @@ const articleController = {
       if (category) where.category = category;
       if (search) {
         where[Op.or] = [
-          { title: { [Op.like]: %% } },
-          { content: { [Op.like]: %% } },
+          { title: { [Op.like]: `%${search}%` } },
+          { content: { [Op.like]: `%${search}%` } },
         ];
       }
       

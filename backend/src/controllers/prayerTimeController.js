@@ -3,47 +3,24 @@ const { PrayerTime } = require('../models');
 const config = require('../config');
 
 const prayerTimeController = {
-  // Get prayer time settings
   getSettings: async (req, res) => {
     try {
       const settings = await PrayerTime.findOne();
-      
       if (!settings) {
-        return res.status(404).json({
-          success: false,
-          message: 'Pengaturan waktu sholat tidak ditemukan',
-        });
+        return res.status(404).json({ success: false, message: 'Pengaturan waktu sholat tidak ditemukan' });
       }
-      
-      res.json({
-        success: true,
-        data: settings,
-      });
+      res.json({ success: true, data: settings });
     } catch (error) {
-      res.status(500).json({
-        success: false,
-        message: 'Terjadi kesalahan',
-        error: error.message,
-      });
+      res.status(500).json({ success: false, message: 'Terjadi kesalahan', error: error.message });
     }
   },
-  
-  // Update prayer time settings
+
   updateSettings: async (req, res) => {
     try {
       const { city, country, latitude, longitude, method, timezone } = req.body;
-      
       let settings = await PrayerTime.findOne();
-      
       if (!settings) {
-        settings = await PrayerTime.create({
-          city,
-          country,
-          latitude,
-          longitude,
-          method,
-          timezone,
-        });
+        settings = await PrayerTime.create({ city, country, latitude, longitude, method, timezone });
       } else {
         await settings.update({
           city: city || settings.city,
@@ -54,50 +31,30 @@ const prayerTimeController = {
           timezone: timezone || settings.timezone,
         });
       }
-      
-      res.json({
-        success: true,
-        message: 'Pengaturan waktu sholat berhasil diupdate',
-        data: settings,
-      });
+      res.json({ success: true, message: 'Pengaturan waktu sholat berhasil diupdate', data: settings });
     } catch (error) {
-      res.status(500).json({
-        success: false,
-        message: 'Terjadi kesalahan',
-        error: error.message,
-      });
+      res.status(500).json({ success: false, message: 'Terjadi kesalahan', error: error.message });
     }
   },
-  
-  // Get today's prayer times
+
   getToday: async (req, res) => {
     try {
       const settings = await PrayerTime.findOne();
-      
       if (!settings) {
-        return res.status(404).json({
-          success: false,
-          message: 'Pengaturan waktu sholat tidak ditemukan. Silakan konfigurasi terlebih dahulu.',
-        });
+        return res.status(404).json({ success: false, message: 'Pengaturan waktu sholat tidak ditemukan' });
       }
-      
+
       const today = new Date();
-      const date = ${today.getDate()}--;
-      
-      const response = await axios.get(${config.prayerTimeApi}/, {
-        params: {
-          city: settings.city,
-          country: settings.country,
-          method: settings.method,
-        },
+      const dateStr = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+      const url = config.prayerTimeApi + '/' + dateStr;
+
+      const response = await axios.get(url, {
+        params: { city: settings.city, country: settings.country, method: settings.method },
       });
-      
-      if (response.data.code !== 200) {
-        throw new Error('Gagal mendapatkan data waktu sholat');
-      }
-      
+
+      if (response.data.code !== 200) throw new Error('Gagal mendapatkan data waktu sholat');
+
       const timings = response.data.data.timings;
-      
       res.json({
         success: true,
         data: {
@@ -111,84 +68,59 @@ const prayerTimeController = {
             maghrib: timings.Maghrib,
             isha: timings.Isha,
           },
-          location: {
-            city: settings.city,
-            country: settings.country,
-          },
+          location: { city: settings.city, country: settings.country },
         },
       });
     } catch (error) {
-      res.status(500).json({
-        success: false,
-        message: 'Terjadi kesalahan saat mengambil waktu sholat',
-        error: error.message,
-      });
+      res.status(500).json({ success: false, message: 'Terjadi kesalahan', error: error.message });
     }
   },
-  
-  // Get monthly prayer times
+
   getMonthly: async (req, res) => {
     try {
       const settings = await PrayerTime.findOne();
-      
       if (!settings) {
-        return res.status(404).json({
-          success: false,
-          message: 'Pengaturan waktu sholat tidak ditemukan',
-        });
+        return res.status(404).json({ success: false, message: 'Pengaturan waktu sholat tidak ditemukan' });
       }
-      
+
       const { month, year } = req.query;
       const currentDate = new Date();
       const targetMonth = month || currentDate.getMonth() + 1;
       const targetYear = year || currentDate.getFullYear();
-      
-      const response = await axios.get(
-        https://api.aladhan.com/v1/calendarByCity//,
-        {
-          params: {
-            city: settings.city,
-            country: settings.country,
-            method: settings.method,
+
+      const calendarUrl = 'https://api.aladhan.com/v1/calendarByCity/' + targetYear + '/' + targetMonth;
+      const response = await axios.get(calendarUrl, {
+        params: { city: settings.city, country: settings.country, method: settings.method },
+      });
+
+      if (response.data.code !== 200) throw new Error('Gagal mendapatkan data waktu sholat');
+
+      const calendar = response.data.data.map(function(day) {
+        return {
+          date: day.date.readable,
+          hijri: day.date.hijri,
+          timings: {
+            fajr: day.timings.Fajr,
+            sunrise: day.timings.Sunrise,
+            dhuhr: day.timings.Dhuhr,
+            asr: day.timings.Asr,
+            maghrib: day.timings.Maghrib,
+            isha: day.timings.Isha,
           },
-        }
-      );
-      
-      if (response.data.code !== 200) {
-        throw new Error('Gagal mendapatkan data waktu sholat');
-      }
-      
-      const calendar = response.data.data.map(day => ({
-        date: day.date.readable,
-        hijri: day.date.hijri,
-        timings: {
-          fajr: day.timings.Fajr,
-          sunrise: day.timings.Sunrise,
-          dhuhr: day.timings.Dhuhr,
-          asr: day.timings.Asr,
-          maghrib: day.timings.Maghrib,
-          isha: day.timings.Isha,
-        },
-      }));
-      
+        };
+      });
+
       res.json({
         success: true,
         data: {
           month: targetMonth,
           year: targetYear,
           calendar,
-          location: {
-            city: settings.city,
-            country: settings.country,
-          },
+          location: { city: settings.city, country: settings.country },
         },
       });
     } catch (error) {
-      res.status(500).json({
-        success: false,
-        message: 'Terjadi kesalahan saat mengambil waktu sholat',
-        error: error.message,
-      });
+      res.status(500).json({ success: false, message: 'Terjadi kesalahan', error: error.message });
     }
   },
 };
