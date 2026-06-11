@@ -1,4 +1,4 @@
-﻿const User = require('./User');
+const User = require('./User');
 const Banner = require('./Banner');
 const About = require('./About');
 const PrayerTime = require('./PrayerTime');

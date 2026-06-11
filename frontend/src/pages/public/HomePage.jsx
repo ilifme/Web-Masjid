@@ -169,7 +169,7 @@ const HomePage = () => {
               <div className="text-center mb-12">
                 <h2 className="section-title">Jadwal Sholat</h2>
                 <p className="section-subtitle">
-                  Waktu sholat untuk wilayah {prayerTimes.city || 'Sukoharjo'}
+                  Waktu sholat untuk wilayah {prayerTimes.location?.city || 'Jakarta'}
                 </p>
               </div>
 

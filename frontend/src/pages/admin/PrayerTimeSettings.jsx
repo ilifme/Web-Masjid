@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { prayerTimeService } from "../../services";
 import { FiSave, FiMapPin, FiClock, FiCalendar, FiRefreshCw, FiSettings } from "react-icons/fi";
 import Swal from "sweetalert2";
@@ -165,7 +165,7 @@ const PrayerTimeSettings = () => {
                 <span className="text-sm text-gray-500 ml-auto">{today.date}</span>
               </div>
               {today.hijri && (
-                <p className="text-sm text-gray-500 mb-4">{today.hijri.day} {today.hijri.month} {today.hijri.year} H</p>
+                <p className="text-sm text-gray-500 mb-4">{today.hijri.day} {today.hijri.month.en||today.hijri.month.number} {today.hijri.year} H</p>
               )}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {Object.entries(prayerNames).map(([key, label]) => (

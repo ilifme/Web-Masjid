@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const router = express.Router();
 const galleryController = require('../controllers/galleryController');
 const { authMiddleware, roleMiddleware } = require('../middleware/auth');

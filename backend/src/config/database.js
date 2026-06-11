@@ -1,4 +1,4 @@
-﻿const { Sequelize } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const config = require('./index');
 
 let sequelize;
@@ -13,6 +13,12 @@ if (config.database.type === 'postgres') {
       port: config.database.port,
       dialect: 'postgres',
       logging: config.nodeEnv === 'development' ? console.log : false,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        },
+      },
       pool: {
         max: 5,
         min: 0,

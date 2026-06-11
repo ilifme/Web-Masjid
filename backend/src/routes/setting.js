@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const router = express.Router();
 const settingController = require('../controllers/settingController');
 const { authMiddleware, roleMiddleware } = require('../middleware/auth');

@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const router = express.Router();
 const prayerTimeController = require('../controllers/prayerTimeController');
 const { authMiddleware, roleMiddleware } = require('../middleware/auth');
