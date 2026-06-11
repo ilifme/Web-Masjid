@@ -190,7 +190,7 @@ const settingController = {
   uploadFooterLogo: async (req, res) => {
     try {
       if (!req.file) return res.status(400).json({ success: false, message: 'File harus diupload' });
-      const imagePath = '/' + req.file.path.replace(/\\/g, '/');
+      const imagePath = getFilePath(req.file);
       let setting = await Setting.findOne({ where: { key: 'footer_logo' } });
       if (setting) { await setting.update({ value: imagePath, type: 'image' }); }
       else { await Setting.create({ key: 'footer_logo', value: imagePath, type: 'image', group: 'general', label: 'Footer Logo' }); }

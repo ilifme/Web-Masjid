@@ -1,5 +1,6 @@
 ﻿const { Gallery } = require('../models');
 const { Op } = require('sequelize');
+const { getFilePath } = require("../helpers/file");
 
 const galleryController = {
   // Get all gallery items
@@ -80,9 +81,9 @@ const galleryController = {
         title,
         description,
         type: type || 'photo',
-        url: '/' + req.file.path.replace(/\\/g, '/'),
+        url: getFilePath(req.file),
         category,
-        thumbnail: type === 'video' ? null : '/' + req.file.path.replace(/\\/g, '/'),
+        thumbnail: type === 'video' ? null : getFilePath(req.file),
         order: order || 0,
       });
       
@@ -124,9 +125,9 @@ const galleryController = {
       
       // Update file if new file uploaded
       if (req.file) {
-        updateData.url = '/' + req.file.path.replace(/\\/g, '/');
+        updateData.url = getFilePath(req.file);
         if (type !== 'video') {
-          updateData.thumbnail = '/' + req.file.path.replace(/\\/g, '/');
+          updateData.thumbnail = getFilePath(req.file);
         }
       }
       

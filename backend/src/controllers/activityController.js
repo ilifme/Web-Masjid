@@ -1,5 +1,6 @@
 ﻿const { Activity } = require('../models');
 const { Op } = require('sequelize');
+const { getFilePath } = require("../helpers/file");
 
 const activityController = {
   // Get all activities
@@ -149,7 +150,7 @@ const activityController = {
         slug,
         description,
         category: category || 'lainnya',
-        image: req.file ? '/' + req.file.path.replace(/\\/g, '/') : null,
+        image: req.file ? getFilePath(req.file) : null,
         schedule,
         location,
         contactPerson,
@@ -210,7 +211,7 @@ const activityController = {
       
       // Update image if new file uploaded
       if (req.file) {
-        updateData.image = '/' + req.file.path.replace(/\\/g, '/');
+        updateData.image = getFilePath(req.file);
       }
       
       await activity.update(updateData);

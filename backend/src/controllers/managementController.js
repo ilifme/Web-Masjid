@@ -54,7 +54,7 @@ const managementController = {
       const management = await Management.create({
         name,
         position,
-        photo: req.file ? '/' + req.file.path.replace(/\\/g, '/') : null,
+        photo: req.file ? getFilePath(req.file) : null,
         description,
         order: order || 0,
       });
@@ -95,7 +95,7 @@ const managementController = {
       };
       
       if (req.file) {
-        updateData.photo = '/' + req.file.path.replace(/\\/g, '/');
+        updateData.photo = getFilePath(req.file);
       }
       
       await management.update(updateData);

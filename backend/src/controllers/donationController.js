@@ -51,7 +51,7 @@ const donationController = {
         accountName,
         accountNumber,
         bankName,
-        qrisImage: req.file ? '/' + req.file.path.replace(/\\/g, '/') : null,
+        qrisImage: req.file ? getFilePath(req.file) : null,
         isActive: isActive !== undefined ? isActive : true,
         order: order || 0,
       });
@@ -93,7 +93,7 @@ const donationController = {
       };
       
       if (req.file) {
-        updateData.qrisImage = '/' + req.file.path.replace(/\\/g, '/');
+        updateData.qrisImage = getFilePath(req.file);
       }
       
       await donation.update(updateData);
@@ -190,7 +190,7 @@ const donationController = {
         description,
         targetAmount: targetAmount || 0,
         currentAmount: currentAmount || 0,
-        image: req.file ? '/' + req.file.path.replace(/\\/g, '/') : null,
+        image: req.file ? getFilePath(req.file) : null,
         startDate,
         endDate,
         isActive: isActive !== undefined ? isActive : true,
@@ -235,7 +235,7 @@ const donationController = {
       };
       
       if (req.file) {
-        updateData.image = '/' + req.file.path.replace(/\\/g, '/');
+        updateData.image = getFilePath(req.file);
       }
       
       await campaign.update(updateData);

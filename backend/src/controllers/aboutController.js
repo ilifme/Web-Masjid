@@ -1,4 +1,4 @@
-﻿const { About } = require('../models');
+const { About } = require('../models');
 
 const aboutController = {
   // Get about data
@@ -41,12 +41,12 @@ const aboutController = {
       
       // Handle mosque image upload
       if (req.files && req.files.mosqueImage) {
-        updateData.mosqueImage = '/' + req.files.mosqueImage[0].path.replace(/\\/g, '/');
+        updateData.mosqueImage = getFilePath(req.files.mosqueImage[0]);
       }
       
       // Handle organization chart upload
       if (req.files && req.files.organizationChart) {
-        updateData.organizationChart = '/' + req.files.organizationChart[0].path.replace(/\\/g, '/');
+        updateData.organizationChart = getFilePath(req.files.organizationChart[0]);
       }
       
       if (!about) {

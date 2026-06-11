@@ -1,5 +1,6 @@
 ﻿const { Article, User } = require('../models');
 const { Op } = require('sequelize');
+const { getFilePath } = require("../helpers/file");
 
 const articleController = {
   // Get all articles
@@ -187,7 +188,7 @@ const articleController = {
         slug,
         content,
         excerpt,
-        thumbnail: req.file ? '/' + req.file.path.replace(/\\/g, '/') : null,
+        thumbnail: req.file ? getFilePath(req.file) : null,
         category,
         tags,
         status: status || 'draft',
@@ -242,7 +243,7 @@ const articleController = {
       
       // Update thumbnail if new file uploaded
       if (req.file) {
-        updateData.thumbnail = '/' + req.file.path.replace(/\\/g, '/');
+        updateData.thumbnail = getFilePath(req.file);
       }
       
       // Update published date if status changed to published

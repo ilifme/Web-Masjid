@@ -1,37 +1,30 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const { cloudinary, isConfigured } = require('../config/cloudinary');
 
-// Ensure upload directories exist
-const ensureDir = (dir) => {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
+const folderMap = {
+  banner: 'masjid/banners',
+  thumbnail: 'masjid/articles',
+  image: 'masjid/images',
+  gallery: 'masjid/gallery',
+  qris: 'masjid/qris',
+  photo: 'masjid/photos',
+  mosqueImage: 'masjid/mosque',
+  organizationChart: 'masjid/organization',
+  logo: 'masjid/logo',
 };
 
-// Storage configuration
-const storage = multer.diskStorage({
+// Local storage fallback
+const ensureDir = (dir) => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+};
+
+const localStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let uploadPath = 'uploads/';
-    
-    if (file.fieldname === 'banner') {
-      uploadPath += 'banners/';
-    } else if (file.fieldname === 'thumbnail' || file.fieldname === 'image') {
-      uploadPath += 'images/';
-    } else if (file.fieldname === 'gallery') {
-      uploadPath += 'gallery/';
-    } else if (file.fieldname === 'qris') {
-      uploadPath += 'qris/';
-    } else if (file.fieldname === 'photo') {
-      uploadPath += 'photos/';
-    } else if (file.fieldname === 'mosqueImage') {
-      uploadPath += 'mosque/';
-    } else if (file.fieldname === 'organizationChart') {
-      uploadPath += 'organization/';
-    } else {
-      uploadPath += 'misc/';
-    }
-    
+    const subfolder = folderMap[file.fieldname] || 'misc';
+    const uploadPath = 'uploads/' + subfolder;
     ensureDir(uploadPath);
     cb(null, uploadPath);
   },
@@ -41,26 +34,36 @@ const storage = multer.diskStorage({
   },
 });
 
-// File filter
-const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|gif|webp|svg/;
-  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = allowedTypes.test(file.mimetype);
-  
-  if (mimetype && extname) {
-    return cb(null, true);
-  } else {
-    cb(new Error('Hanya file gambar yang diperbolehkan (jpg, jpeg, png, gif, webp, svg)!'));
+// Determine storage based on Cloudinary availability
+const getStorage = () => {
+  if (isConfigured()) {
+    return new CloudinaryStorage({
+      cloudinary: cloudinary,
+      params: {
+        folder: (req, file) => folderMap[file.fieldname] || 'masjid/misc',
+        format: (req, file) => {
+          const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
+          return ['jpg','jpeg','png','gif','webp','svg'].includes(ext) ? ext : 'png';
+        },
+        public_id: (req, file) => file.fieldname + '-' + Date.now(),
+        transformation: [{ width: 1200, height: 1200, crop: 'limit', quality: 'auto' }],
+      },
+    });
   }
+  return localStorage;
+};
+
+const fileFilter = (req, file, cb) => {
+  const allowed = /jpeg|jpg|png|gif|webp|svg/;
+  const ext = allowed.test(path.extname(file.originalname).toLowerCase());
+  const mime = allowed.test(file.mimetype);
+  cb(null, mime && ext);
 };
 
 const upload = multer({
-  storage: storage,
-  limits: { 
-    fileSize: 5 * 1024 * 1024, // 5MB
-    files: 5 // Maximum 5 files
-  },
-  fileFilter: fileFilter,
+  storage: getStorage(),
+  limits: { fileSize: 5 * 1024 * 1024, files: 5 },
+  fileFilter,
 });
 
 module.exports = upload;

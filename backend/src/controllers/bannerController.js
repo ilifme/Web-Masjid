@@ -1,6 +1,7 @@
 ﻿const { Banner } = require('../models');
 const fs = require('fs');
 const path = require('path');
+const { getFilePath } = require("../helpers/file");
 
 const bannerController = {
   // Get all banners
@@ -84,7 +85,7 @@ const bannerController = {
       const banner = await Banner.create({
         title,
         description,
-        image: '/' + req.file.path.replace(/\\/g, '/'),
+        image: getFilePath(req.file),
         ctaText,
         ctaLink,
         isActive: isActive !== undefined ? isActive : true,
@@ -134,7 +135,7 @@ const bannerController = {
         if (banner.image && fs.existsSync(banner.image.substring(1))) {
           fs.unlinkSync(banner.image.substring(1));
         }
-        updateData.image = '/' + req.file.path.replace(/\\/g, '/');
+        updateData.image = getFilePath(req.file);
       }
       
       await banner.update(updateData);
