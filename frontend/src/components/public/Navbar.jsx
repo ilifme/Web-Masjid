@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+﻿import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FiMenu, FiX, FiMoon, FiSun } from 'react-icons/fi';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -11,12 +11,22 @@ const Navbar = () => {
   const isHome = location.pathname === "/";
 
   useEffect(() => {
+    // Set scrolled immediately based on page type
+    if (!isHome) {
+      setScrolled(true);
+    } else {
+      setScrolled(window.scrollY > 50);
+    }
+
     const handleScroll = () => {
-      setScrolled(isHome ? window.scrollY > 50 : true);
+      if (isHome) {
+        setScrolled(window.scrollY > 50);
+      }
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHome, location.pathname]);
 
   const navLinks = [
     { path: '/', label: 'Beranda' },
@@ -30,7 +40,11 @@ const Navbar = () => {
 
   return (
     <nav
-      className={'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ' + (scrolled ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent')}
+      className={"fixed top-0 left-0 right-0 z-50 transition-all duration-300 " + (
+        scrolled
+          ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg"
+          : "bg-transparent"
+      )}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
@@ -40,7 +54,7 @@ const Navbar = () => {
               <span className="text-white font-bold text-xl">M</span>
             </div>
             <div>
-              <h1 className={'font-bold text-lg ' + (scrolled ? 'text-gray-900 dark:text-white' : 'text-white')}>
+              <h1 className={"font-bold text-lg " + (scrolled ? "text-gray-900 dark:text-white" : "text-white")}>
                 Masjid Al-Ikhlas
               </h1>
             </div>
@@ -52,19 +66,25 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={'font-medium transition-colors ' + (scrolled ? 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400' : 'text-white hover:text-primary-200')}
+                className={"font-medium transition-colors " + (
+                  scrolled
+                    ? "text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+                    : "text-white hover:text-primary-200"
+                )}
               >
                 {link.label}
               </Link>
             ))}
             <button
               onClick={toggleDarkMode}
-              className={'p-2 rounded-lg transition-colors ' + (scrolled ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : 'hover:bg-white/10')}
+              className={"p-2 rounded-lg transition-colors " + (
+                scrolled ? "hover:bg-gray-100 dark:hover:bg-gray-800" : "hover:bg-white/10"
+              )}
             >
               {darkMode ? (
-                <FiSun className={scrolled ? 'text-gray-900 dark:text-white' : 'text-white'} />
+                <FiSun className={scrolled ? "text-gray-900 dark:text-white" : "text-white"} />
               ) : (
-                <FiMoon className={scrolled ? 'text-gray-900 dark:text-white' : 'text-white'} />
+                <FiMoon className={scrolled ? "text-gray-900 dark:text-white" : "text-white"} />
               )}
             </button>
           </div>
@@ -72,7 +92,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={'lg:hidden p-2 rounded-lg ' + (scrolled ? 'text-gray-900 dark:text-white' : 'text-white')}
+            className={"lg:hidden p-2 rounded-lg " + (scrolled ? "text-gray-900 dark:text-white" : "text-white")}
           >
             {mobileMenuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
           </button>
@@ -98,7 +118,7 @@ const Navbar = () => {
               className="flex items-center space-x-2 py-3 text-gray-700 dark:text-gray-300"
             >
               {darkMode ? <FiSun /> : <FiMoon />}
-              <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+              <span>{darkMode ? "Light Mode" : "Dark Mode"}</span>
             </button>
           </div>
         </div>

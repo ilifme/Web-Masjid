@@ -1,4 +1,8 @@
-import { useState, useEffect } from "react";
+﻿const fs = require("fs");
+const dir = "E:/Web-Masjid/frontend/src/pages/public/";
+
+// AboutPage.jsx
+fs.writeFileSync(dir + "AboutPage.jsx", `import { useState, useEffect } from "react";
 import Navbar from "../../components/public/Navbar";
 import Breadcrumb from "../../components/public/Breadcrumb";
 import Footer from "../../components/public/Footer";
@@ -87,4 +91,6 @@ const AboutPage = () => {
   );
 };
 
-export default AboutPage;
+export default AboutPage;`);
+
+console.log("AboutPage.jsx done!");

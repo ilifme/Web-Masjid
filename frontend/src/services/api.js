@@ -1,4 +1,4 @@
-import axios from 'axios';
+﻿import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const BASE_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
@@ -41,7 +41,9 @@ api.interceptors.response.use(
 export const getImageUrl = (path) => {
   if (!path) return '';
   if (path.startsWith('http')) return path;
-  return `${BASE_URL}`;
+  // Remove leading slash if present, then join with BASE_URL
+  const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+  return BASE_URL + '/' + cleanPath;
 };
 
 export default api;
