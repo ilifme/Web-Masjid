@@ -28,6 +28,7 @@ import ManagementBoard from './pages/admin/ManagementBoard';
 import SettingsManagement from './pages/admin/SettingsManagement';
 import UserManagement from './pages/admin/UserManagement';
 import PrayerTimeSettings from './pages/admin/PrayerTimeSettings';
+import ChangePassword from './pages/admin/ChangePassword';
 
 // Protected Route Component
 import ProtectedRoute from './components/admin/ProtectedRoute';
