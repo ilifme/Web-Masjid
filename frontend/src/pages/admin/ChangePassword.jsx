@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { authService } from "../../services";
 import { FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import Swal from "sweetalert2";
@@ -43,8 +43,8 @@ const ChangePassword = () => {
           <label className="label">Password Lama</label>
           <div className="relative">
             <input type={showOld ? "text" : "password"} className="input pr-10" value={formData.oldPassword}
-              onChange={e => setFormData({...formData, oldPassword: e.target.value})} required />
-            <button type="button" onClick={() => setShowOld(!showOld)}
+              onChange={function(e) { setFormData({...formData, oldPassword: e.target.value}); }} required />
+            <button type="button" onClick={function() { setShowOld(!showOld); }}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
               {showOld ? <FiEyeOff /> : <FiEye />}
             </button>
@@ -54,8 +54,8 @@ const ChangePassword = () => {
           <label className="label">Password Baru</label>
           <div className="relative">
             <input type={showNew ? "text" : "password"} className="input pr-10" value={formData.newPassword}
-              onChange={e => setFormData({...formData, newPassword: e.target.value})} required />
-            <button type="button" onClick={() => setShowNew(!showNew)}
+              onChange={function(e) { setFormData({...formData, newPassword: e.target.value}); }} required />
+            <button type="button" onClick={function() { setShowNew(!showNew); }}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
               {showNew ? <FiEyeOff /> : <FiEye />}
             </button>
@@ -65,8 +65,8 @@ const ChangePassword = () => {
           <label className="label">Konfirmasi Password Baru</label>
           <div className="relative">
             <input type={showConfirm ? "text" : "password"} className="input pr-10" value={formData.confirmPassword}
-              onChange={e => setFormData({...formData, confirmPassword: e.target.value})} required />
-            <button type="button" onClick={() => setShowConfirm(!showConfirm)}
+              onChange={function(e) { setFormData({...formData, confirmPassword: e.target.value}); }} required />
+            <button type="button" onClick={function() { setShowConfirm(!showConfirm); }}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
               {showConfirm ? <FiEyeOff /> : <FiEye />}
             </button>

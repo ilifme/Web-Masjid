@@ -13,11 +13,11 @@ const UserManagement = () => {
     username: "", email: "", password: "", fullName: "", role: "editor", isActive: true
   });
 
-  useEffect(() => { fetchUsers(); }, []);
+  useEffect(function() { fetchUsers(); }, []);
 
   const fetchUsers = async () => {
     try {
-      const res = await userService.getAll({ search, limit: 50 });
+      const res = await userService.getAll({ search: search, limit: 50 });
       setUsers(res.data);
     } catch (err) { console.error(err); }
     finally { setLoading(false); }
@@ -31,7 +31,7 @@ const UserManagement = () => {
     }
     try {
       if (editData) {
-        const payload = { ...formData };
+        const payload = Object.assign({}, formData);
         if (!payload.password) delete payload.password;
         await userService.update(editData.id, payload);
         Swal.fire("Berhasil!", "User berhasil diupdate", "success");
@@ -66,18 +66,18 @@ const UserManagement = () => {
     }
   };
 
-  const resetForm = () => {
+  const resetForm = function() {
     setEditData(null);
     setFormData({ username: "", email: "", password: "", fullName: "", role: "editor", isActive: true });
   };
 
-  const roleBadge = (role) => {
-    const colors = {
+  const roleBadge = function(role) {
+    var colors = {
       super_admin: "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400",
       admin: "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
-      editor: "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400",
+      editor: "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
     };
-    const labels = { super_admin: "Super Admin", admin: "Admin", editor: "Editor" };
+    var labels = { super_admin: "Super Admin", admin: "Admin", editor: "Editor" };
     return <span className={"px-2 py-1 text-xs rounded-full font-medium " + (colors[role] || colors.editor)}>{labels[role] || role}</span>;
   };
 
@@ -90,14 +90,14 @@ const UserManagement = () => {
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Kelola User</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">Tambah, edit, dan hapus user admin</p>
         </div>
-        <button onClick={() => { resetForm(); setShowModal(true); }} className="btn btn-primary flex items-center gap-2">
+        <button onClick={function() { resetForm(); setShowModal(true); }} className="btn btn-primary flex items-center gap-2">
           <FiPlus /><span>Tambah User</span>
         </button>
       </div>
 
       <div className="relative max-w-md">
         <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-        <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari user..." className="input pl-10" />
+        <input type="text" value={search} onChange={function(e) { setSearch(e.target.value); }} placeholder="Cari user..." className="input pl-10" />
       </div>
 
       <div className="card overflow-x-auto">
@@ -115,12 +115,12 @@ const UserManagement = () => {
             {users.length === 0 && (
               <tr><td colSpan="5" className="py-8 text-center text-gray-500">Belum ada user</td></tr>
             )}
-            {users.map(u => (
+            {users.map(function(u) { return (
               <tr key={u.id} className="border-b border-gray-100 dark:border-gray-800">
                 <td className="py-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">
-                      <span className="text-primary-600 font-semibold text-sm">{u.fullName?.charAt(0) || "U"}</span>
+                      <span className="text-primary-600 font-semibold text-sm">{(u.fullName || "U").charAt(0)}</span>
                     </div>
                     <div>
                       <p className="font-medium text-gray-900 dark:text-white">{u.fullName}</p>
@@ -141,12 +141,12 @@ const UserManagement = () => {
                 </td>
                 <td className="py-4">
                   <div className="flex items-center gap-2">
-                    <button onClick={() => handleEdit(u)} className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"><FiEdit /></button>
-                    <button onClick={() => handleDelete(u.id)} className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"><FiTrash2 /></button>
+                    <button onClick={function() { handleEdit(u); }} className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"><FiEdit /></button>
+                    <button onClick={function() { handleDelete(u.id); }} className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"><FiTrash2 /></button>
                   </div>
                 </td>
               </tr>
-            ))}
+            );})}
           </tbody>
         </table>
       </div>
@@ -160,30 +160,30 @@ const UserManagement = () => {
                 <div>
                   <label className="label">Username *</label>
                   <input type="text" className="input" value={formData.username}
-                    onChange={e => setFormData({...formData, username: e.target.value})} required />
+                    onChange={function(e) { setFormData(Object.assign({}, formData, {username: e.target.value})); }} required />
                 </div>
                 <div>
                   <label className="label">Nama Lengkap *</label>
                   <input type="text" className="input" value={formData.fullName}
-                    onChange={e => setFormData({...formData, fullName: e.target.value})} required />
+                    onChange={function(e) { setFormData(Object.assign({}, formData, {fullName: e.target.value})); }} required />
                 </div>
               </div>
               <div>
                 <label className="label">Email *</label>
                 <input type="email" className="input" value={formData.email}
-                  onChange={e => setFormData({...formData, email: e.target.value})} required />
+                  onChange={function(e) { setFormData(Object.assign({}, formData, {email: e.target.value})); }} required />
               </div>
               <div>
                 <label className="label">{editData ? "Password (kosongkan jika tidak diubah)" : "Password *"}</label>
                 <input type="password" className="input" value={formData.password}
-                  onChange={e => setFormData({...formData, password: e.target.value})}
+                  onChange={function(e) { setFormData(Object.assign({}, formData, {password: e.target.value})); }}
                   required={!editData} />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="label">Role</label>
                   <select className="input" value={formData.role}
-                    onChange={e => setFormData({...formData, role: e.target.value})}>
+                    onChange={function(e) { setFormData(Object.assign({}, formData, {role: e.target.value})); }}>
                     <option value="editor">Editor</option>
                     <option value="admin">Admin</option>
                     <option value="super_admin">Super Admin</option>
@@ -192,7 +192,7 @@ const UserManagement = () => {
                 <div>
                   <label className="label">Status</label>
                   <select className="input" value={formData.isActive}
-                    onChange={e => setFormData({...formData, isActive: e.target.value === "true"})}>
+                    onChange={function(e) { setFormData(Object.assign({}, formData, {isActive: e.target.value === "true"})); }}>
                     <option value="true">Aktif</option>
                     <option value="false">Nonaktif</option>
                   </select>
@@ -200,7 +200,7 @@ const UserManagement = () => {
               </div>
               <div className="flex gap-3 pt-4">
                 <button type="submit" className="btn btn-primary flex-1">{editData ? "Update" : "Simpan"}</button>
-                <button type="button" onClick={() => { setShowModal(false); resetForm(); }} className="btn btn-secondary flex-1">Batal</button>
+                <button type="button" onClick={function() { setShowModal(false); resetForm(); }} className="btn btn-secondary flex-1">Batal</button>
               </div>
             </form>
           </div>
