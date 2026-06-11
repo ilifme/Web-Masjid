@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../../components/public/Navbar';
 import Footer from '../../components/public/Footer';
 import { bannerService, articleService, activityService, prayerTimeService, announcementService, getImageUrl } from '../../services';
@@ -131,7 +131,7 @@ const HomePage = () => {
             className="max-w-4xl"
           >
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              {banners[0]?.title || 'Selamat Datang di Masjid Al-Ikhlas'}
+              {banners[0]?.title || 'Selamat Datang di Masjid Quba'}
             </h1>
             <p className="text-xl text-gray-200 mb-8">
               {banners[0]?.description || 'Mari bergabung dalam kegiatan keagamaan dan sosial'}

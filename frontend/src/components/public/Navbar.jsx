@@ -1,4 +1,4 @@
-﻿import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FiMenu, FiX, FiMoon, FiSun } from 'react-icons/fi';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -55,7 +55,7 @@ const Navbar = () => {
             </div>
             <div>
               <h1 className={"font-bold text-lg " + (scrolled ? "text-gray-900 dark:text-white" : "text-white")}>
-                Masjid Al-Ikhlas
+                Masjid Quba
               </h1>
             </div>
           </Link>

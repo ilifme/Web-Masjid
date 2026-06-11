@@ -114,7 +114,7 @@ const ActivityManagement = () => {
               <div><label className="label">Deskripsi *</label><textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="textarea" rows="4" required /></div>
               <div className="grid grid-cols-2 gap-4">
                 <div><label className="label">Jadwal</label><input type="text" value={formData.schedule} onChange={e => setFormData({...formData, schedule: e.target.value})} className="input" placeholder="Setiap Minggu, 19:00 WIB" /></div>
-                <div><label className="label">Lokasi</label><input type="text" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="input" placeholder="Masjid Al-Ikhlas" /></div>
+                <div><label className="label">Lokasi</label><input type="text" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="input" placeholder="Masjid Quba" /></div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div><label className="label">Kontak Person</label><input type="text" value={formData.contactPerson} onChange={e => setFormData({...formData, contactPerson: e.target.value})} className="input" /></div>

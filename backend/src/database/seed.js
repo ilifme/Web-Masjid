@@ -1,4 +1,4 @@
-﻿const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const { sequelize } = require('../config/database');
 const models = require('../models');
 
@@ -17,7 +17,7 @@ const seed = async () => {
       isActive: true,
     });
     
-    console.log('✓ Super Admin created');
+    console.log('âœ“ Super Admin created');
     
     // Create About data
     await models.About.create({
@@ -26,7 +26,7 @@ const seed = async () => {
       mission: 'Menyelenggarakan kegiatan ibadah, pendidikan, dan sosial yang berkualitas untuk kemajuan umat Islam.',
     });
     
-    console.log('✓ About data created');
+    console.log('âœ“ About data created');
     
     // Create Prayer Time Settings
     await models.PrayerTime.create({
@@ -38,7 +38,7 @@ const seed = async () => {
       timezone: 'Asia/Jakarta',
     });
     
-    console.log('✓ Prayer Time settings created');
+    console.log('âœ“ Prayer Time settings created');
     
     // Create Banner
     await models.Banner.create({
@@ -51,12 +51,12 @@ const seed = async () => {
       order: 1,
     });
     
-    console.log('✓ Banner created');
+    console.log('âœ“ Banner created');
     
     // Create Settings
     const settings = [
-      { key: 'site_name', value: 'Masjid Al-Ikhlas', type: 'text', group: 'general', label: 'Nama Website' },
-      { key: 'site_description', value: 'Website Resmi Masjid Al-Ikhlas', type: 'text', group: 'general', label: 'Deskripsi Website' },
+      { key: 'site_name', value: 'Masjid Quba', type: 'text', group: 'general', label: 'Nama Website' },
+      { key: 'site_description', value: 'Website Resmi Masjid Quba', type: 'text', group: 'general', label: 'Deskripsi Website' },
       { key: 'address', value: 'Jl. Contoh No. 123, Jakarta', type: 'textarea', group: 'contact', label: 'Alamat' },
       { key: 'phone', value: '021-12345678', type: 'text', group: 'contact', label: 'Telepon' },
       { key: 'email', value: 'info@masjid.com', type: 'text', group: 'contact', label: 'Email' },
@@ -69,21 +69,21 @@ const seed = async () => {
     
     await models.Setting.bulkCreate(settings);
     
-    console.log('✓ Settings created');
+    console.log('âœ“ Settings created');
     
     // Create Sample Article
     await models.Article.create({
-      title: 'Sejarah Masjid Al-Ikhlas',
+      title: 'Sejarah Masjid Quba',
       slug: 'sejarah-masjid-al-ikhlas',
       content: 'Ini adalah artikel tentang sejarah masjid...',
-      excerpt: 'Sejarah singkat masjid Al-Ikhlas',
+      excerpt: 'Sejarah singkat Masjid Quba',
       category: 'Sejarah',
       status: 'published',
       publishedAt: new Date(),
       authorId: 1,
     });
     
-    console.log('✓ Sample article created');
+    console.log('âœ“ Sample article created');
     
     // Create Sample Activity
     await models.Activity.create({
@@ -92,11 +92,11 @@ const seed = async () => {
       description: 'Kajian rutin setiap minggu membahas tema keislaman',
       category: 'kajian',
       schedule: 'Setiap Minggu, 19:00 WIB',
-      location: 'Masjid Al-Ikhlas',
+      location: 'Masjid Quba',
       isActive: true,
     });
     
-    console.log('✓ Sample activity created');
+    console.log('âœ“ Sample activity created');
     
     // Create Sample Announcement
     await models.Announcement.create({
@@ -107,7 +107,7 @@ const seed = async () => {
       isActive: true,
     });
     
-    console.log('✓ Sample announcement created');
+    console.log('âœ“ Sample announcement created');
     // Create DKM Management
     await models.Management.bulkCreate([
       { name: "Ustadz Ahmad Fauzi", position: "Ketua DKM", description: "Ketua Dewan Kemakmuran Masjid", order: 1 },
@@ -119,7 +119,7 @@ const seed = async () => {
       { name: "Bapak Hendra Gunawan", position: "Ketua Bidang Sosial", description: "Koordinator kegiatan sosial", order: 7 },
       { name: "Bapak Firmansyah", position: "Ketua Bidang Pembangunan", description: "Koordinator pembangunan masjid", order: 8 },
     ]);
-    console.log('✓ DKM Management created');
+    console.log('âœ“ DKM Management created');
 
     
     console.log('\n=================================');

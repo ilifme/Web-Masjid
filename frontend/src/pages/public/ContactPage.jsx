@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../../components/public/Navbar";
 import Breadcrumb from "../../components/public/Breadcrumb";
 import Footer from "../../components/public/Footer";
@@ -38,7 +38,7 @@ const ContactPage = () => {
     );
   }
 
-  const address = settings.address || "Masjid Al-Ikhlas, Jl. Contoh No. 123, Kelurahan, Kecamatan, Kota";
+  const address = settings.address || "Masjid Quba, Jl. Contoh No. 123, Kelurahan, Kecamatan, Kota";
   const phone = settings.phone || "(021) 1234-5678";
   const email = settings.email || "info@masjidalikhlas.com";
   const mapsEmbed = settings.maps_embed || "";

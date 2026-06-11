@@ -19,7 +19,7 @@ const Footer = () => {
   }, []);
 
   const s = settings;
-  const siteName = s.site_name || "Masjid Al-Ikhlas";
+  const siteName = s.site_name || "Masjid Quba";
   const siteDesc = s.site_description || "Pusat kegiatan keagamaan dan sosial masyarakat.";
   const address = s.address || "Jl. Contoh No. 123, Jakarta";
   const phone = s.phone || "021-12345678";
