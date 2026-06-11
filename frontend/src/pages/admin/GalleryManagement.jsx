@@ -26,7 +26,7 @@ const GalleryManagement = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file) { Swal.fire("Error", "File harus diupload", "error"); return; }
+    if (!file) { Swal.fire({ title: "Error!", text: "File harus diupload", icon: "error", confirmButtonColor: "#10b981" }); return; }
     const fd = new FormData();
     fd.append("title", formData.title);
     fd.append("description", formData.description);
@@ -40,12 +40,12 @@ const GalleryManagement = () => {
       setFormData({ title: "", description: "", type: "photo", category: "" });
       setFile(null); setPreview(null);
       fetchItems();
-    } catch (err) { Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error"); }
+    } catch (err) { Swal.fire({ title: "Error!", text: err.response?.data?.message || err.message || "Terjadi kesalahan", icon: "error", confirmButtonColor: "#10b981" }); }
   };
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({ title: "Hapus?", text: "Data tidak dapat dikembalikan", icon: "warning", showCancelButton: true, confirmButtonColor: "#ef4444", cancelButtonColor: "#6b7280", confirmButtonText: "Ya, Hapus", cancelButtonText: "Batal" });
-    if (result.isConfirmed) { try { await galleryService.delete(id); Swal.fire("Berhasil!", "Galeri berhasil dihapus", "success"); fetchItems(); } catch (err) { Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error"); } }
+    if (result.isConfirmed) { try { await galleryService.delete(id); Swal.fire("Berhasil!", "Galeri berhasil dihapus", "success"); fetchItems(); } catch (err) { Swal.fire({ title: "Error!", text: err.response?.data?.message || err.message || "Terjadi kesalahan", icon: "error", confirmButtonColor: "#10b981" }); } }
   };
 
   if (loading) return <div className="flex items-center justify-center h-64"><div className="spinner w-12 h-12"></div></div>;

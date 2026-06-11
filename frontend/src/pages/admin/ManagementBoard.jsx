@@ -32,7 +32,7 @@ const ManagementBoard = () => {
       if (editData) { await managementService.update(editData.id, fd); Swal.fire("Berhasil!", "Data berhasil diupdate", "success"); }
       else { await managementService.create(fd); Swal.fire("Berhasil!", "Data berhasil dibuat", "success"); }
       setShowModal(false); resetForm(); fetchItems();
-    } catch (err) { Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error"); }
+    } catch (err) { Swal.fire({ title: "Error!", text: err.response?.data?.message || err.message || "Terjadi kesalahan", icon: "error", confirmButtonColor: "#10b981" }); }
   };
 
   const handleEdit = (item) => {

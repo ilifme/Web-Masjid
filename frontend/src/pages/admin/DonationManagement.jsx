@@ -36,7 +36,7 @@ const DonationManagement = () => {
       }
       Swal.fire("Berhasil!", "Data berhasil disimpan", "success");
       setShowModal(false); resetForm(); fetchData();
-    } catch (err) { Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error"); }
+    } catch (err) { Swal.fire({ title: "Error!", text: err.response?.data?.message || err.message || "Terjadi kesalahan", icon: "error", confirmButtonColor: "#10b981" }); }
   };
 
   const handleEdit = (item) => { setEditData(item); setFormData(item); setShowModal(true); };

@@ -38,7 +38,7 @@ const AboutManagement = () => {
     try {
       await aboutService.update(fd);
       Swal.fire("Berhasil!", "Data tentang masjid berhasil diupdate", "success");
-    } catch (err) { Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error"); }
+    } catch (err) { Swal.fire({ title: "Error!", text: err.response?.data?.message || err.message || "Terjadi kesalahan", icon: "error", confirmButtonColor: "#10b981" }); }
     finally { setSaving(false); }
   };
 

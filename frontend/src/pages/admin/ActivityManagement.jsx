@@ -36,7 +36,7 @@ const ActivityManagement = () => {
       if (editData) { await activityService.update(editData.id, fd); Swal.fire("Berhasil!", "Kegiatan berhasil diupdate", "success"); }
       else { await activityService.create(fd); Swal.fire("Berhasil!", "Kegiatan berhasil dibuat", "success"); }
       setShowModal(false); resetForm(); fetchItems();
-    } catch (err) { Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error"); }
+    } catch (err) { Swal.fire({ title: "Error!", text: err.response?.data?.message || err.message || "Terjadi kesalahan", icon: "error", confirmButtonColor: "#10b981" }); }
   };
 
   const handleEdit = (item) => {
@@ -48,7 +48,7 @@ const ActivityManagement = () => {
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({ title: "Hapus Kegiatan?", text: "Data tidak dapat dikembalikan", icon: "warning", showCancelButton: true, confirmButtonColor: "#ef4444", cancelButtonColor: "#6b7280", confirmButtonText: "Ya, Hapus", cancelButtonText: "Batal" });
-    if (result.isConfirmed) { try { await activityService.delete(id); Swal.fire("Berhasil!", "Kegiatan berhasil dihapus", "success"); fetchItems(); } catch (err) { Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error"); } }
+    if (result.isConfirmed) { try { await activityService.delete(id); Swal.fire("Berhasil!", "Kegiatan berhasil dihapus", "success"); fetchItems(); } catch (err) { Swal.fire({ title: "Error!", text: err.response?.data?.message || err.message || "Terjadi kesalahan", icon: "error", confirmButtonColor: "#10b981" }); } }
   };
 
   const resetForm = () => {

@@ -24,7 +24,7 @@ const AnnouncementManagement = () => {
       if (editData) { await announcementService.update(editData.id, formData); Swal.fire("Berhasil!", "Pengumuman berhasil diupdate", "success"); }
       else { await announcementService.create(formData); Swal.fire("Berhasil!", "Pengumuman berhasil dibuat", "success"); }
       setShowModal(false); setFormData({ title: "", content: "", type: "running_text", priority: 0, isActive: true }); setEditData(null); fetchItems();
-    } catch (err) { Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error"); }
+    } catch (err) { Swal.fire({ title: "Error!", text: err.response?.data?.message || err.message || "Terjadi kesalahan", icon: "error", confirmButtonColor: "#10b981" }); }
   };
 
   const handleEdit = (item) => { setEditData(item); setFormData(item); setShowModal(true); };

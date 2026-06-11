@@ -46,7 +46,7 @@ const BannerManagement = () => {
     e.preventDefault();
 
     if (!editData && !imageFile) {
-      Swal.fire('Error', 'Gambar banner harus diupload', 'error');
+      Swal.fire({ title: "Error!", text: "Gambar banner harus diupload", icon: "error", confirmButtonColor: "#10b981" });
       return;
     }
 

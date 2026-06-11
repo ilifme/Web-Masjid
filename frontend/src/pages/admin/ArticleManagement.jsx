@@ -50,7 +50,7 @@ const ArticleManagement = () => {
       }
       setShowModal(false); resetForm(); fetchArticles();
     } catch (err) {
-      Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error");
+      Swal.fire({ title: "Error!", text: err.response?.data?.message || err.message || "Terjadi kesalahan", icon: "error", confirmButtonColor: "#10b981" });
     }
   };
 
@@ -65,7 +65,7 @@ const ArticleManagement = () => {
     const result = await Swal.fire({ title: "Hapus Artikel?", text: "Data tidak dapat dikembalikan", icon: "warning", showCancelButton: true, confirmButtonColor: "#ef4444", cancelButtonColor: "#6b7280", confirmButtonText: "Ya, Hapus", cancelButtonText: "Batal" });
     if (result.isConfirmed) {
       try { await articleService.delete(id); Swal.fire("Berhasil!", "Artikel berhasil dihapus", "success"); fetchArticles(); }
-      catch (err) { Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error"); }
+      catch (err) { Swal.fire({ title: "Error!", text: err.response?.data?.message || err.message || "Terjadi kesalahan", icon: "error", confirmButtonColor: "#10b981" }); }
     }
   };
 
