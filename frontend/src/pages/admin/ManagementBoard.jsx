@@ -83,12 +83,31 @@ const ManagementBoard = () => {
               <input className="input" placeholder="Jabatan *" value={formData.position} onChange={e => setFormData({...formData, position: e.target.value})} required />
               <textarea className="textarea" rows="3" placeholder="Deskripsi" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
               <div className="grid grid-cols-2 gap-4">
-                <input type="number" className="input" placeholder="Urutan" value={formData.order} onChange={e => setFormData({...formData, order: e.target.value})} />
-                <div className="flex items-center">
-                  <input type="file" accept="image/*" className="input" onChange={e => { const f = e.target.files[0]; if (f) { setPhotoFile(f); setPhotoPreview(URL.createObjectURL(f)); } }} />
+                <div>
+                  <label className="label">Urutan</label>
+                  <input type="number" className="input" placeholder="Urutan" value={formData.order} onChange={e => setFormData({...formData, order: e.target.value})} />
+                </div>
+                <div>
+                  <label className="label">Foto</label>
+                  <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 h-[120px] flex items-center justify-center">
+                    {photoPreview ? (
+                      <div className="relative flex items-center justify-center w-full h-full">
+                        <img src={photoPreview} alt="Preview" className="w-16 h-16 rounded-full object-cover" />
+                        <button type="button" onClick={() => { setPhotoFile(null); setPhotoPreview(null); }}
+                          className="absolute -top-2 -right-2 p-1.5 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors">
+                          <FiTrash2 className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <label className="flex flex-col items-center cursor-pointer w-full h-full justify-center">
+                        <FiImage className="w-8 h-8 text-gray-400 mb-1" />
+                        <span className="text-xs text-gray-600 dark:text-gray-400">Klik upload foto</span>
+                        <input type="file" accept="image/*" onChange={e => { const f = e.target.files[0]; if (f) { setPhotoFile(f); setPhotoPreview(URL.createObjectURL(f)); } }} className="hidden" />
+                      </label>
+                    )}
+                  </div>
                 </div>
               </div>
-              {photoPreview && <img src={photoPreview} alt="" className="w-20 h-20 rounded-full mx-auto object-cover" />}
               <div className="flex gap-3 pt-4">
                 <button type="submit" className="btn btn-primary flex-1">Simpan</button>
                 <button type="button" onClick={() => { setShowModal(false); resetForm(); }} className="btn btn-secondary flex-1">Batal</button>
