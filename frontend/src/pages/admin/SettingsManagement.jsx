@@ -28,35 +28,42 @@ const SettingsManagement = () => {
 
   const handleSave = async () => {
     setSaving(true);
-    const bulkData = [
-      { key: "site_name", value: settings.site_name },
-      { key: "site_description", value: settings.site_description },
-      { key: "address", value: settings.address },
-      { key: "phone", value: settings.phone },
-      { key: "email", value: settings.email },
-      { key: "facebook", value: settings.facebook },
-      { key: "instagram", value: settings.instagram },
-      { key: "youtube", value: settings.youtube },
-      { key: "maps_embed", value: settings.maps_embed },
-    ];
     try {
-      await settingService.bulkUpdate(bulkData);
+      // Simpan semua pengaturan text
+      const bulkData = [
+        { key: "site_name", value: settings.site_name },
+        { key: "site_description", value: settings.site_description },
+        { key: "address", value: settings.address },
+        { key: "phone", value: settings.phone },
+        { key: "email", value: settings.email },
+        { key: "facebook", value: settings.facebook },
+        { key: "instagram", value: settings.instagram },
+        { key: "youtube", value: settings.youtube },
+        { key: "maps_embed", value: settings.maps_embed },
+      ];
+      const res1 = await settingService.bulkUpdate(bulkData);
+      if (!res1.success) throw new Error(res1.message || "Gagal menyimpan pengaturan");
+
+      // Upload logo jika ada
       if (logoFile) {
         const fd = new FormData();
-        fd.append("key", "footer_logo");
-        fd.append("value", "uploaded");
-        fd.append("type", "image");
-        fd.append("group", "general");
-        fd.append("label", "Footer Logo");
-        // Upload logo separately
-        const upForm = new FormData();
-        upForm.append("logo", logoFile);
-        await fetch(import.meta.env.VITE_API_URL + "/settings/footer-logo", {
-          method: "POST", headers: { Authorization: "Bearer " + localStorage.getItem("token") }, body: upForm
+        fd.append("logo", logoFile);
+        const token = localStorage.getItem("token");
+        const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+        const res2 = await fetch(apiUrl + "/settings/footer-logo", {
+          method: "POST",
+          headers: { Authorization: "Bearer " + token },
+          body: fd,
         });
+        const data2 = await res2.json();
+        if (!data2.success) throw new Error(data2.message || "Gagal upload logo");
       }
       Swal.fire("Berhasil!", "Pengaturan footer berhasil disimpan", "success");
-    } catch (err) { Swal.fire("Error", err.response?.data?.message || "Terjadi kesalahan", "error"); }
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message || "Terjadi kesalahan";
+      console.error("Save error:", err);
+      Swal.fire({ title: "Error!", text: msg, icon: "error", confirmButtonColor: "#10b981" });
+    }
     finally { setSaving(false); }
   };
 
