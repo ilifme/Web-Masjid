@@ -1,0 +1,3 @@
+{
+  "externals": ["pg", "pg-hstore", "mysql2", "pg-native", "cloudinary"]
+}
