@@ -50,7 +50,18 @@
   }
   
   .section-title {
-    @apply text-3xl md:text-4xl font-bold text-center mb-12;
+    @apply text-3xl md:text-4xl font-bold text-center mb-4;
+  }
+
+  .section-title-wrapper {
+    @apply inline-block relative;
+  }
+
+  .section-title-underline {
+    @apply block h-1 bg-gradient-to-r from-primary-500 to-primary-300 rounded-full mt-3;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .section-subtitle {

@@ -167,7 +167,10 @@ const HomePage = () => {
               viewport={{ once: true }}
             >
               <div className="text-center mb-12">
-                <h2 className="section-title">Jadwal Sholat</h2>
+                <div className="section-title-wrapper">
+                    <h2 className="section-title">Jadwal Sholat</h2>
+                    <span className="section-title-underline"></span>
+                  </div>
                 <p className="section-subtitle">
                   Waktu sholat untuk wilayah {prayerTimes.location?.city || 'Jakarta'}
                 </p>
@@ -213,7 +216,10 @@ const HomePage = () => {
             viewport={{ once: true }}
           >
             <div className="text-center mb-12">
-              <h2 className="section-title">Kegiatan Masjid</h2>
+              <div className="section-title-wrapper">
+                  <h2 className="section-title">Kegiatan Masjid</h2>
+                  <span className="section-title-underline"></span>
+                </div>
               <p className="section-subtitle">
                 Ikuti berbagai kegiatan keagamaan dan sosial di masjid kami
               </p>
@@ -271,7 +277,10 @@ const HomePage = () => {
             viewport={{ once: true }}
           >
             <div className="text-center mb-12">
-              <h2 className="section-title">Artikel Terbaru</h2>
+              <div className="section-title-wrapper">
+                  <h2 className="section-title">Artikel Terbaru</h2>
+                  <span className="section-title-underline"></span>
+                </div>
               <p className="section-subtitle">
                 Baca artikel dan berita terbaru seputar kegiatan masjid
               </p>
