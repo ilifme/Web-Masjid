@@ -67,7 +67,28 @@ try {
     } catch (e) { res.status(500).json({ success: false, message: e.message }); }
   });
 
-  // Public: Prayer Times
+
+  // Public: Prayer Times Monthly
+  app.get('/api/prayer-times/monthly', async (req, res) => {
+    try {
+      const settings = await db.findOne('prayer_times', {});
+      if (!settings) return res.status(404).json({ success: false, message: 'Pengaturan tidak ditemukan' });
+      const month = req.query.month || (new Date().getMonth() + 1);
+      const year = req.query.year || new Date().getFullYear();
+      const axios = require('axios');
+      const ad = await axios.get('https://api.aladhan.com/v1/calendarByCity/' + year + '/' + month, {
+        params: { city: settings.city, country: settings.country, method: settings.method || 2 }
+      });
+      if (ad.data.code !== 200) throw new Error('Gagal mengambil data');
+      const calendar = ad.data.data.map(d => ({
+        date: d.date.readable,
+        hijri: d.date.hijri,
+        timings: { fajr: d.timings.Fajr, sunrise: d.timings.Sunrise, dhuhr: d.timings.Dhuhr, asr: d.timings.Asr, maghrib: d.timings.Maghrib, isha: d.timings.Isha }
+      }));
+      res.json({ success: true, data: { month: parseInt(month), year: parseInt(year), calendar, location: { city: settings.city, country: settings.country } } });
+    } catch (e) { res.status(500).json({ success: false, message: e.message }); }
+  });
+
   app.get('/api/prayer-times/today', async (req, res) => {
     try {
       const settings = await db.findOne('prayer_times', {});
