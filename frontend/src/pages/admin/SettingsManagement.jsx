@@ -115,7 +115,7 @@ const SettingsManagement = () => {
             <div><label className="label">Telepon</label><input className="input" value={settings.phone} onChange={e => update("phone", e.target.value)} /></div>
             <div><label className="label">Email</label><input className="input" value={settings.email} onChange={e => update("email", e.target.value)} /></div>
           </div>
-          <div><label className="label">Google Maps Embed</label><textarea className="textarea" rows="3" value={settings.maps_embed} onChange={e => update("maps_embed", e.target.value)} placeholder="https://www.google.com/maps/embed?pb=..." /><p className="text-xs text-gray-500 mt-1">Gunakan OpenStreetMap: buka openstreetmap.org > cari lokasi > Bagikan > HTML > Salin iframe URL. Atau Google Maps: Share > Embed map > copy URL pb=...</p></div>
+          <div><label className="label">Google Maps Embed</label><textarea className="textarea" rows="3" value={settings.maps_embed} onChange={e => update("maps_embed", e.target.value)} placeholder="https://www.google.com/maps/embed?pb=..." /><p className="text-xs text-gray-500 mt-1">Gunakan OpenStreetMap: buka openstreetmap.org &gt; cari lokasi &gt; Bagikan &gt; HTML &gt; Salin iframe URL. Atau Google Maps: Share &gt; Embed map &gt; copy URL pb=...</p></div>
         </div>
       </div>
 
