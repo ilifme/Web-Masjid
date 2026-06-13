@@ -112,7 +112,7 @@ const ActivitiesPage = () => {
                           />
                         </div>
                       )}
-                      <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm rounded-full mb-3">
+                      <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm rounded-full mb-3 self-start">
                         {activity.category}
                       </span>
                       <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 flex-grow group-hover:text-primary-600 transition-colors">

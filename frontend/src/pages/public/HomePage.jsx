@@ -239,7 +239,7 @@ const HomePage = () => {
                       className="w-full h-48 object-cover rounded-lg mb-4"
                     />
                   )}
-                  <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm rounded-full mb-3 mt-auto">
+                  <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm rounded-full mb-3 self-start">
                     {activity.category}
                   </span>
                   <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 flex-grow">
@@ -300,7 +300,7 @@ const HomePage = () => {
                       className="w-full h-48 object-cover rounded-lg mb-4"
                     />
                   )}
-                  <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm rounded-full mb-3 mt-auto">
+                  <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm rounded-full mb-3 self-start">
                     {article.category}
                   </span>
                   <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 flex-grow">

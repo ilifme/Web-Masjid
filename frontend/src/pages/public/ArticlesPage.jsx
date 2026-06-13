@@ -133,7 +133,7 @@ const ArticlesPage = () => {
                       )}
                       <div className="flex items-center gap-2 mb-3">
                         {article.category && (
-                          <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-xs rounded-full">
+                          <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-xs rounded-full self-start">
                             {article.category}
                           </span>
                         )}
