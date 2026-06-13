@@ -70,4 +70,17 @@ if (!process.env.VERCEL) {
   startServer();
 }
 
-module.exports = app;
+
+// Wrap app for Vercel serverless error handling
+if (process.env.VERCEL) {
+  const origApp = app;
+  const handler = (req, res) => {
+    return origApp(req, res).catch(err => {
+      console.error('Vercel error:', err);
+      res.status(500).json({ success: false, message: err.message });
+    });
+  };
+  module.exports = handler;
+} else {
+  module.exports = app;
+};
