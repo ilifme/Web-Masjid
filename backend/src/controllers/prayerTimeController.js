@@ -1,4 +1,4 @@
-﻿const axios = require('axios');
+const axios = require('axios');
 const { PrayerTime } = require('../models');
 const config = require('../config');
 
@@ -88,7 +88,7 @@ const prayerTimeController = {
       const targetMonth = month || currentDate.getMonth() + 1;
       const targetYear = year || currentDate.getFullYear();
 
-      const calendarUrl = 'https: api.aladhan.com/v1/calendarByCity/' + targetYear + '/' + targetMonth;
+      const calendarUrl = 'https://api.aladhan.com/v1/calendarByCity/' + targetYear + '/' + targetMonth;
       const response = await axios.get(calendarUrl, {
         params: { city: settings.city, country: settings.country, method: settings.method },
       });
